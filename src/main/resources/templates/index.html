@@ -7,6 +7,11 @@
 <body>
 
 	<h1 th:text="'Best of the year ' + ${name} "></h1>
+	
+	<ul>
+		<li><a th:href="@{/movies}">MOVIES</a></li>
+		<li><a th:href="@{/songs}">SONGS</a></li>
+	</ul>
 </body>
 </html>
 
