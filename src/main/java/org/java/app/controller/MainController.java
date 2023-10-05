@@ -29,14 +29,15 @@ public class MainController {
 	@GetMapping("/movies")
 	public String getMoviesIndex(Model model) {
 		
-		String strMovies = "";
-		for (Movie movie : getBestMovies()) {
-			
-			strMovies += movie.getTitle() + ", ";
-		}
-		strMovies = strMovies.substring(0, strMovies.length() - 2);
+//		String strMovies = "";
+//		for (Movie movie : getBestMovies()) {
+//			
+//			strMovies += movie.getTitle() + ", ";
+//		}
+//		strMovies = strMovies.substring(0, strMovies.length() - 2);
 		
-		model.addAttribute("strMovies", strMovies);
+		List<Movie> movies = getBestMovies();
+		model.addAttribute("movies", movies);
 		
 		return "movies";
 	}
@@ -45,10 +46,13 @@ public class MainController {
 	@GetMapping("/movies/{id}")
 	public String getMovieDetails(@PathVariable int id, Model model) {
 		
-		Movie movie = getBestMovies().get(id);
-		String movieTitle = movie.getTitle();
+		Movie movie = getBestMovies().stream()
+						.filter(m -> m.getId() == id)
+						.findFirst().get();
+//		String movieTitle = movie.getTitle();
 		
-		model.addAttribute("movieTitle", movieTitle);
+		
+		model.addAttribute("movie", movie);
 		
 		return "movie-details";
 	}
@@ -77,14 +81,15 @@ public class MainController {
 	@GetMapping("/songs")
 	public String getSongsIndex(Model model) {
 		
-		String strSongs = "";
-		for (Song song : getBestSongs()) {
-			
-			strSongs += song.getTitle() + ", ";
-		}
-		strSongs = strSongs.substring(0, strSongs.length() - 2);
+//		String strSongs = "";
+//		for (Song song : getBestSongs()) {
+//			
+//			strSongs += song.getTitle() + ", ";
+//		}
+//		strSongs = strSongs.substring(0, strSongs.length() - 2);
 		
-		model.addAttribute("strSongs", strSongs);
+		List<Song> songs = getBestSongs();
+		model.addAttribute("songs", songs);
 		
 		return "songs";
 	}
@@ -93,10 +98,14 @@ public class MainController {
 		@GetMapping("/songs/{id}")
 		public String getSongDetails(@PathVariable int id, Model model) {
 			
-			Song song = getBestSongs().get(id);
-			String songTitle = song.getTitle();
+//			Song song = getBestSongs().get(id);
+//			String songTitle = song.getTitle();
 			
-			model.addAttribute("songTitle", songTitle);
+			Song song = getBestSongs().stream()
+					.filter(s -> s.getId() == id)
+					.findFirst().get();
+			
+			model.addAttribute("song", song);
 			
 			return "song-details";
 		}

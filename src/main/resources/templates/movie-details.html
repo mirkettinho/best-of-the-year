@@ -4,8 +4,10 @@
 <meta charset="ISO-8859-1">
 <title>Movie Details</title>
 </head>
-<body>
+<body th:object="${movie}">
 	
-	<h1>Movie: [[${movieTitle}]]</h1>
+	<header th:insert="frags/header :: header"/>
+	
+	<h1>Movie: [[*{title}]]</h1>
 </body>
 </html>

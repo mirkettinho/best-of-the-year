@@ -6,8 +6,17 @@
 </head>
 <body>
 	
+	<header th:insert="frags/header :: header"/>
+	
 	<h1>MOVIES</h1>
 		
-		<p> [[${strMovies}]] </p>
+		<ul>
+			<li th:each="movie : ${movies}"
+				th:object="${movie}">
+				
+				<a th:href="@{/movies/{id}(id=*{id})}">[[*{title}]]</a>
+				
+			</li>
+		</ul>
 </body>
 </html>

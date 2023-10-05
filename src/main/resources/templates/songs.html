@@ -6,8 +6,17 @@
 </head>
 <body>
 	
+	<header th:insert="frags/header :: header"/>
+	
 	<h1>SONGS</h1>
 		
-		<p> [[${strSongs}]] </p>
+		<ul>
+			<li th:each="song : ${songs}"
+				th:object="${song}">
+				
+				<a th:href="@{/songs/{id}(id=*{id})}">[[*{title}]]</a>
+				
+			</li>
+		</ul>
 </body>
 </html>
