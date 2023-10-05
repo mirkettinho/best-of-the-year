@@ -5,11 +5,9 @@
 <title>Songs</title>
 </head>
 <body>
-
-	<h1>SONGS</h1>
 	
-		<ul>
-			<li th:each="song : ${songs}" th:text="${song.title}"></li>
-		</ul>
+	<h1>SONGS</h1>
+		
+		<p> [[${strSongs}]] </p>
 </body>
 </html>

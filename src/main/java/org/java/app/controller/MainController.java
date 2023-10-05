@@ -1,6 +1,6 @@
 package org.java.app.controller;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.java.app.pojo.Movie;
@@ -8,6 +8,8 @@ import org.java.app.pojo.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @Controller
@@ -23,63 +25,96 @@ public class MainController {
 		return "index";
 	}
 	
+	///MOVIES
 	@GetMapping("/movies")
-	public String movies(Model model) {
+	public String getMoviesIndex(Model model) {
 		
-		List<Movie> movies = getBestMovies();
+		String strMovies = "";
+		for (Movie movie : getBestMovies()) {
+			
+			strMovies += movie.getTitle() + ", ";
+		}
+		strMovies = strMovies.substring(0, strMovies.length() - 2);
 		
-		model.addAttribute("movies", movies);
+		model.addAttribute("strMovies", strMovies);
 		
 		return "movies";
 	}
 	
-	
-	@GetMapping("/songs")
-	public String songs(Model model) {
+	///MOVIE ID
+	@GetMapping("/movies/{id}")
+	public String getMovieDetails(@PathVariable int id, Model model) {
 		
-		List<Song> songs = getBestSongs();
+		Movie movie = getBestMovies().get(id);
+		String movieTitle = movie.getTitle();
 		
-		model.addAttribute("songs", songs);
+		model.addAttribute("movieTitle", movieTitle);
 		
-		return "songs";
+		return "movie-details";
 	}
-	
 	
 	///MOVIES
 	private List<Movie> getBestMovies() {
 		
-		List<Movie> movies = new ArrayList<>();
-		
-		movies.add(new Movie(1, "I Mercenari 1"));
-		movies.add(new Movie(2, "I Mercenari 2"));
-		movies.add(new Movie(3, "I Mercenari 3"));
-		movies.add(new Movie(4, "I Mercenari 4"));
-		movies.add(new Movie(5, "John Wick 1"));
-		movies.add(new Movie(6, "John Wick 2"));
-		movies.add(new Movie(7, "John Wick 3"));
-		movies.add(new Movie(8, "John Wick 4"));
-		movies.add(new Movie(9, "Watcher"));
-		movies.add(new Movie(10, "Mia"));
-		
-		return movies;
+		return Arrays.asList(new Movie[] {
+				new Movie(1, "I Mercenari 1"),
+				new Movie(2, "I Mercenari 2"),
+				new Movie(3, "I Mercenari 3"),
+				new Movie(4, "I Mercenari 4"),
+				new Movie(5, "John Wick 1"),
+				new Movie(6, "John Wick 2"),
+				new Movie(7, "John Wick 3"),
+				new Movie(8, "John Wick 4"),
+				new Movie(9, "Watcher"),
+				new Movie(10, "Mia")
+		});
 	}
+	
+	
+	
+	
+	///SONGS
+	@GetMapping("/songs")
+	public String getSongsIndex(Model model) {
+		
+		String strSongs = "";
+		for (Song song : getBestSongs()) {
+			
+			strSongs += song.getTitle() + ", ";
+		}
+		strSongs = strSongs.substring(0, strSongs.length() - 2);
+		
+		model.addAttribute("strSongs", strSongs);
+		
+		return "songs";
+	}
+	
+	///SONG ID
+		@GetMapping("/songs/{id}")
+		public String getSongDetails(@PathVariable int id, Model model) {
+			
+			Song song = getBestSongs().get(id);
+			String songTitle = song.getTitle();
+			
+			model.addAttribute("songTitle", songTitle);
+			
+			return "song-details";
+		}
 	
 	///SONGS
 	private List<Song> getBestSongs() {
 		
-		List<Song> songs = new ArrayList<>();
-		
-		songs.add(new Song(1, "Respect"));
-		songs.add(new Song(2, "Fight the Power"));
-		songs.add(new Song(3, "A Change is Gonna Come"));
-		songs.add(new Song(4, "Like a Rolling Stone"));
-		songs.add(new Song(5, "Smells Like Teen Spirit"));
-		songs.add(new Song(6, "What’s Going On "));
-		songs.add(new Song(7, "Strawberry Fields Forever"));
-		songs.add(new Song(8, "Get Ur Freak On"));
-		songs.add(new Song(9, "Dreams"));
-		songs.add(new Song(10, "Hey Ya"));
-		
-		return songs;
+		return Arrays.asList(new Song[] {
+				new Song(1, "Respect"),
+				new Song(2, "Fight the Power"),
+				new Song(3, "A Change is Gonna Come"),
+				new Song(4, "Like a Rolling Stone"),
+				new Song(5, "Smells Like Teen Spirit"),
+				new Song(6, "What’s Going On "),
+				new Song(7, "Strawberry Fields Forever"),
+				new Song(8, "Get Ur Freak On"),
+				new Song(9, "Dreams"),
+				new Song(10, "Hey Ya")
+		});
 	}
 }
